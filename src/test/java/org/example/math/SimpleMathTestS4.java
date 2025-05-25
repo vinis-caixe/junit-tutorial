@@ -2,15 +2,11 @@ package org.example.math;
 
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.Arguments;
-import org.junit.jupiter.params.provider.CsvFileSource;
-import org.junit.jupiter.params.provider.CsvSource;
-import org.junit.jupiter.params.provider.MethodSource;
+import org.junit.jupiter.params.provider.*;
 
 import java.util.stream.Stream;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.*;
 
 @DisplayName("Test Math Operations in SimpleMath Class")
 class SimpleMathTestS4 {
@@ -20,6 +16,13 @@ class SimpleMathTestS4 {
     @BeforeEach
     void beforeEachMethod() {
         math = new SimpleMath();
+    }
+
+    @ParameterizedTest
+    @ValueSource(strings = {"Pelé", "Senna", "Keith Moon"})
+    void testValueSource(String firstName) {
+        System.out.println(firstName);
+        assertNotNull(firstName);
     }
 
     @DisplayName("Test double subtraction [firstNumber, secondNumber, expected]")
