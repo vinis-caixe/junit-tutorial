@@ -1,15 +1,28 @@
-package org.example.service.stub;
+package org.example.business;
 
 import org.example.service.CourseService;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 
 import java.util.Arrays;
 import java.util.List;
 
-public class CourseServiceStub implements CourseService {
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.when;
 
-    @Override
-    public List<String> retrieveCourses(String student) {
-        return Arrays.asList(
+class CourseBusinessMockTest {
+
+    CourseService mockService;
+    CourseBusiness business;
+    List<String> courses;
+
+    @BeforeEach
+    void setup() {
+        // Given
+        mockService = Mockito.mock(CourseService.class);
+        business = new CourseBusiness(mockService);
+        courses = Arrays.asList(
                 "REST API's RESTFul do 0 à Azure com ASP.NET Core 5 e Docker",
                 "Agile Desmistificado com Scrum, XP, Kanban e Trello",
                 "Spotify Engineering Culture Desmistificado",
@@ -24,13 +37,17 @@ public class CourseServiceStub implements CourseService {
         );
     }
 
-    @Override
-    public List<String> doSomething(String student) {
-        return List.of();
+    @Test
+    void testCoursesRelatedToSpring_When_UsingAMock() {
+
+        // Given
+        when(mockService.retrieveCourses("Leandro")).thenReturn(courses);
+
+        // When
+        var filteredCourses = business.retrieveCoursesRelatedToSpring("Leandro");
+
+        // Then
+        assertEquals(4, filteredCourses.size());
     }
 
-    @Override
-    public void deleteCourse(String course) {
-
-    }
 }
